@@ -1,12 +1,46 @@
-
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .container{
-    display: flex,
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    min-height: 100vh;
+    
 }
 .grid{
     display: flex;
     flex-wrap: wrap;
     height: 560px;
     width: 560px;
-    border: solid black 3px;
+    ;
 
+}
+.grid div{
+    height: 20px;
+    width: 20px;
+}
+.pac-dot{    
+    border-radius: 50%;
+    background-color: green;    
+}
+.power-pellet{
+  
+    border-radius: 50%;
+    background-color: red;  
+}
+.wall{   
+   
+    background-color: blue; 
+}
+.ghost-lair{
+       
+    background-color: rgb(238, 244, 242);
+}
+.empty{   
+  
+    background-color: rgb(238, 244, 242);
+   
 }
