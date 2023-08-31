@@ -1,13 +1,23 @@
-body{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+:root{
+    --primary-color : #eef4f2;
+    --secundary-color :  #babdf5; 
+    --ternary-color : #b10404;
+    --dark-color : #3b2a2a;
+    --text-color : #b11b1b;
+    --text-color-dark : #f7edee;
+    
 }
 .container{
     display: flex;
     justify-content: center;
     align-items: center;    
     min-height: 100vh;
+    background-color: var(--primary-color);
     
 }
 .grid{
@@ -15,8 +25,9 @@ body{
     flex-wrap: wrap;
     height: 560px;
     width: 560px;
-    background-color: rgb(238, 244, 242)
-    ;
+    background-color: var(--primary-color);
+    box-shadow: #dddada 5px 5px;
+    
 
 }
 .grid div{
@@ -43,18 +54,18 @@ body{
 }
 .ghost-lair{
        
-    background-color: rgb(238, 244, 242);
+    background-color: var(--primary-color);
 }
 .empty{   
   
-    background-color: rgb(238, 244, 242);
+    background-color: var(--primary-color);
    
 }
 .pacman{
     
     border-radius: 50%;
-    background-color: rgb(238, 244, 242);
-    background-image: url("assets/imgs/pacman.gif");
+    background-color: var(--primary-color);
+    background-image: url("assets/imgs/pacman.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;

@@ -2,6 +2,7 @@
    const container = document.querySelector('.container')   
    const grid = document.createElement('div')
     grid.classList.add('grid')
+   let primary_color  = getComputedStyle(document.body).getPropertyValue('--primary-color')
    
    squares = []
    const layout = [
