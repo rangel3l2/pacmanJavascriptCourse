@@ -68,3 +68,6 @@ function buildBoard(){
 
 }
 buildBoard()
+
+let pacmanCurrentIndex = 490
+squares[pacmanCurrentIndex].classList.add('pacman')

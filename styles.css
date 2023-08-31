@@ -15,6 +15,7 @@ body{
     flex-wrap: wrap;
     height: 560px;
     width: 560px;
+    background-color: rgb(238, 244, 242)
     ;
 
 }
@@ -24,16 +25,21 @@ body{
 }
 .pac-dot{    
     border-radius: 50%;
-    background-color: green;    
+    background-image: url("assets/imgs/pac-dot.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+   
 }
 .power-pellet{
   
     border-radius: 50%;
-    background-color: red;  
+    background-color: red; 
+    
 }
 .wall{   
    
-    background-color: blue; 
+    background-color: rgb(122, 122, 218); 
 }
 .ghost-lair{
        
@@ -42,5 +48,17 @@ body{
 .empty{   
   
     background-color: rgb(238, 244, 242);
+   
+}
+.pacman{
+    
+    border-radius: 50%;
+    background-color: rgb(238, 244, 242);
+    background-image: url("assets/imgs/pacman.gif");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: rotate(0deg);
+    transition: transform 0.2s linear;
    
 }
