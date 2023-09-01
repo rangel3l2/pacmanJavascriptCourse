@@ -82,6 +82,7 @@ Este projeto está licenciado sob a Licença MIT - consulte o arquivo LICENSE pa
 Autor
 Este curso foi desenvolvido por Rangel Gomes baseado inspirado no curso de 
 https://www.youtube.com/watch?v=CeUGlSl2i4Q&t=988s.
+ https://github.com/kubowania/pac-man
 
 Agradecimentos
 Agradecemos a todos os participantes por se juntarem a nós neste curso de JavaScript. Esperamos que você se divirta criando o Pac-Man e aprendendo conceitos importantes de programação web!
