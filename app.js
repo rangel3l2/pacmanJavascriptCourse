@@ -149,23 +149,6 @@ function pacDotEaten() {
     squares[pacmanCurrentIndex].classList.remove('pac-dot')
   }
 }
-
-//what happens when you eat a power-pellet
-function powerPelletEaten() {
-  if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
-    score +=10
-    createScore()
-    ghosts.forEach(ghost => ghost.isScared = true)
-    setTimeout(unScareGhosts, 10000)
-    squares[pacmanCurrentIndex].classList.remove('power-pellet')
-  }
-}
-
-//make the ghosts stop flashing
-function unScareGhosts() {
-  ghosts.forEach(ghost => ghost.isScared = false)
-}
-
 //create ghosts using Constructors
 class Ghost {
   constructor(className, startIndex, speed) {
@@ -185,6 +168,23 @@ ghosts = [
   new Ghost('inky', 351, 300),
   new Ghost('clyde', 379, 500)
   ]
+
+//what happens when you eat a power-pellet
+function powerPelletEaten() {
+  if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+    score +=10
+    createScore()
+    ghosts.forEach(ghost => ghost.isScared = true)
+    setTimeout(unScareGhosts, 10000)
+    squares[pacmanCurrentIndex].classList.remove('power-pellet')
+  }
+}
+
+//make the ghosts stop flashing
+function unScareGhosts() {
+  ghosts.forEach(ghost => ghost.isScared = false)
+}
+
 
 //draw my ghosts onto the grid
 ghosts.forEach(ghost => {
