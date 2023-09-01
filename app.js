@@ -1,5 +1,13 @@
 
 
+   const container = document.querySelector('.container')   
+   const grid = document.createElement('div')
+    grid.classList.add('grid')
+   let primary_color  = getComputedStyle(document.body).getPropertyValue('--primary-color')
+   const styleSheet = document.styleSheets[0]; 
+   width = 28
+   score = 0
+   squares = []
    const layout = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -37,3 +45,5 @@
   // 4 - empty
 
 
+let pacmanCurrentIndex = 490
+squares[pacmanCurrentIndex].classList.add('pacman')
