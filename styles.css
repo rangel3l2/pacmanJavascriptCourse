@@ -18,6 +18,7 @@
     align-items: center;    
     min-height: 100vh;
     background-color: var(--primary-color);
+   
     
 }
 .grid{
@@ -27,6 +28,7 @@
     width: 560px;
     background-color: var(--primary-color);
     box-shadow: #dddada 5px 5px;
+    margin-right: 4%;
     
 
 }
@@ -61,7 +63,7 @@
     background-color: var(--primary-color);
    
 }
-.pacman{
+.pacmanStopped{
     
     border-radius: 50%;
     background-color: var(--primary-color);
@@ -73,3 +75,102 @@
     transition: transform 0.2s linear;
    
 }
+.pacmanMoving{
+        
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        background-image: url("assets/imgs/pacman.gif");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        transform: rotate(0deg);
+        transition: transform 0.2s linear;
+    
+}
+.blinky {
+    background-image: url("assets/imgs/red-ghost.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: rotate(0deg);
+    transition: transform 0.2s linear;
+}
+
+.pinky {
+    background-image: url("assets/imgs/pink-ghost.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: rotate(0deg); 
+}
+
+.inky {
+    background-image: url("assets/imgs/blue-ghost.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: rotate(0deg); 
+}
+
+.clyde {
+     background-image: url("assets/imgs/yellow-ghost.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+   
+}
+
+.pac-man {
+    background-color: yellow;
+    border-radius: 10px;
+}
+
+.scared-ghost {
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    background-image: url("assets/imgs/scared-ghost.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: rotate(0deg);
+    transition: transform 0.2s linear;
+}
+.score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 50px; 
+    background-color: var(--primary-color);
+    box-shadow: #dddada 5px 5px;
+    font-size: 30px;
+    color: var(--text-color);
+    font-family: 'Press Start 2P', cursive;
+}
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 2%;
+  }
+  
+  /* Efeito de hover */
+button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Efeito de clique */
+button:active {
+    background-color: #1f618d;
+  }
+
+  
+  
+  
+  
