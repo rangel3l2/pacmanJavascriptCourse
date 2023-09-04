@@ -169,14 +169,14 @@ ghosts.forEach(ghost => {
 })
 function unScaredGhost(){
   ghosts.forEach(ghost=> ghost.isScared = false)
-  
+    
 }
 ghosts.forEach(ghost => moveGhost(ghost))
 function moveGhost(ghost){
   const directions = [-1, +1, width, -width]
   let direction = directions[Math.floor(Math.random() * directions.length)]
   ghost.timerId = setInterval(() => {
-    if(!squares[ghost.currentIndex + direction].classList.contains('wall') && !squares[ghost.currentIndex + direction].classList.contains('ghost') && !squares[ghost.currentIndex + direction].classList.contains('ghost-lair')){
+    if(!squares[ghost.currentIndex + direction].classList.contains('wall') && !squares[ghost.currentIndex + direction].classList.contains('ghost')){
 
       squares[ghost.currentIndex].classList.remove(ghost.className)
       squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
