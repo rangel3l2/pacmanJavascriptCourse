@@ -396,13 +396,7 @@ function moveGhost(ghost) {
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     //else find a new random direction ot go in
     } else direction = directions[Math.floor(Math.random() * directions.length)]
-    if  (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
-      !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
-        squares[ghost.currentIndex].classList.remove(ghost.className)
-        squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
-       /*  scanPacman(ghost, direction) */
-        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-      }
+ 
     //if the ghost is currently scared
     if (ghost.isScared) {
       squares[ghost.currentIndex].classList.add('scared-ghost')
@@ -416,7 +410,7 @@ function moveGhost(ghost) {
       createScore()
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     }
-  checkForGameOver()
+  checkForGameOver(ghost)
   }, ghost.speed)
 }
 /* function scanPacman(ghost, direction){
@@ -451,17 +445,19 @@ function createScore() {
 }
 
 //check for a game over
-function checkForGameOver() {
+function checkForGameOver(ghost) {
   if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
     !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     document.removeEventListener('keyup', movePacman)
-    setTimeout(function(){ container.innerHTML = `<h2>Game Over</h2><button onclick="location.reload();">Restart</button>` }, 500)
+    setTimeout(function(){
+      clearInterval(ghost.timerId)
+       container.innerHTML = `<h2>Game Over</h2><button onclick="location.reload();">Restart</button>` }, 500)
   }
 }
 
 //check for a win - more is when this score is reached
-function checkForWin() {
+function checkForWin(ghost) {
   if (score === 274) {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     document.removeEventListener('keyup', movePacman)
