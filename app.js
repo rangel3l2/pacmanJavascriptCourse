@@ -4,6 +4,11 @@
     grid.classList.add('grid')
    let primary_color  = getComputedStyle(document.body).getPropertyValue('--primary-color')
    const styleSheet = document.styleSheets[0]; 
+   
+   const scoreDisplay = document.createElement('div')
+   container.appendChild(scoreDisplay)
+   scoreDisplay.classList.add('score')
+   
    width = 28
    score = 0
    squares = []
@@ -19,7 +24,7 @@
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,
     1,1,1,1,1,1,0,1,1,4,4,4,4,4,4,4,4,4,4,1,1,0,1,1,1,1,1,1,
-    1,1,1,1,1,1,0,1,1,4,1,1,1,2,2,1,1,1,4,1,1,0,1,1,1,1,1,1,
+    1,1,1,1,1,1,0,1,1,4,1,1,1,5,5,1,1,1,4,1,1,0,1,1,1,1,1,1,
     1,1,1,1,1,1,0,1,1,4,1,2,2,2,2,2,2,1,4,1,1,0,1,1,1,1,1,1,
     4,4,4,4,4,4,0,0,0,4,1,2,2,2,2,2,2,1,4,0,0,0,4,4,4,4,4,4,
     1,1,1,1,1,1,0,1,1,4,1,2,2,2,2,2,2,1,4,1,1,0,1,1,1,1,1,1,
@@ -42,6 +47,7 @@
   // 2 - ghost-lair
   // 3 - power-pellet
   // 4 - empty
+  // 5 - exit
 
 function buildBoard(){
   container.appendChild(grid)
@@ -65,6 +71,9 @@ function buildBoard(){
       case 4 :
         square.classList.add('empty')
         break
+      case 5 :
+        square.classList.add('exit')
+        break
 
     }
   }
@@ -87,24 +96,24 @@ function movePacman(e) {
     //left
  
     case 37:
-      utilsCss(180)
+      
       
       moveLeft()
       squares[pacmanCurrentIndex].classList.add('pacmanMoving')
       break
       //up
     case 38:
-      utilsCss(-90)
+     
       moveUp()
       break
       //right
     case 39:
-      utilsCss(0)
+      
       moveRight()
       break
       //down
     case 40:
-      utilsCss(90)
+      
       moveDown()
       break
   }
@@ -113,7 +122,7 @@ function movePacman(e) {
 }
 let moveLeftInterval, moveRightInterval, moveUpInterval, moveDownInterval;
 const moveLeft = ()=>{
- 
+  utilsCss(180)
   if(
     pacmanCurrentIndex % width !== 0 &&
     !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
@@ -137,6 +146,7 @@ const moveLeft = ()=>{
     }
  
   if (squares[pacmanCurrentIndex -1] === squares[363]) {
+    squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
     pacmanCurrentIndex = 391
   }
   clearInterval(moveUpInterval);
@@ -148,13 +158,51 @@ const moveLeft = ()=>{
   moveLeftInterval = setInterval(moveLeft, 300);
   
 }
-
+document.addEventListener('click', (e) => {
+  
+ 
+  if(squares[pacmanCurrentIndex - 1] == e.target){
+  clearInterval(moveUpInterval);
+  clearInterval(moveDownInterval);
+  clearInterval(moveLeftInterval);
+  clearInterval(moveRightInterval);
+  moveRightInterval = setInterval(moveLeft, 300);
+  }
+});
+document.addEventListener('click', (e) => {
+  if(squares[pacmanCurrentIndex + 1] == e.target){
+  clearInterval(moveUpInterval);
+  clearInterval(moveDownInterval);
+  clearInterval(moveLeftInterval);
+  clearInterval(moveRightInterval);
+  moveRightInterval = setInterval(moveRight, 300);
+  }
+});
+document.addEventListener('click', (e) => {
+  if(squares[pacmanCurrentIndex - width] == e.target){
+  clearInterval(moveUpInterval);
+  clearInterval(moveDownInterval);
+  clearInterval(moveLeftInterval);
+  clearInterval(moveRightInterval);
+  moveRightInterval = setInterval(moveUp, 300);
+  }
+});
+document.addEventListener('click', (e) => {
+  if(squares[pacmanCurrentIndex + width] == e.target){
+    clearInterval(moveUpInterval);
+    clearInterval(moveDownInterval);
+    clearInterval(moveLeftInterval);
+    clearInterval(moveRightInterval);
+  moveRightInterval = setInterval(moveDown, 300);
+  }
+});
 const moveRight = ()=>{
+  utilsCss(0)
   if(
     pacmanCurrentIndex % width < width - 1 &&
     !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
     !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
-  ){
+      ){
   
   squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
   pacmanCurrentIndex += 1
@@ -172,6 +220,7 @@ const moveRight = ()=>{
     squares[pacmanCurrentIndex].classList.add('pacmanStopped')
   }
   if (squares[pacmanCurrentIndex +1] === squares[392]) {
+    squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
     pacmanCurrentIndex = 364
   }
     clearInterval(moveUpInterval);
@@ -184,6 +233,7 @@ const moveRight = ()=>{
 }
 
   const moveUp = ()=>{
+    utilsCss(-90)
     if(
       pacmanCurrentIndex - width >= 0 &&
       !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
@@ -216,6 +266,7 @@ const moveRight = ()=>{
     }
   
   const moveDown = ()=>{
+    utilsCss(90)
     if (
       pacmanCurrentIndex + width < width * width &&
       !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
@@ -270,9 +321,9 @@ class Ghost {
 
 //all my ghosts
 ghosts = [
-  new Ghost('blinky', 348, 250),
-  new Ghost('pinky', 376, 400),
-  new Ghost('inky', 351, 300),
+  new Ghost('blinky', 348, 310),
+  new Ghost('pinky', 376, 450),
+  new Ghost('inky', 351, 375),
   new Ghost('clyde', 379, 500)
   ]
 
@@ -302,14 +353,41 @@ ghosts.forEach(ghost => {
 //move the Ghosts randomly
 ghosts.forEach(ghost => moveGhost(ghost))
 
-function moveGhost(ghost) {
-  const directions =  [-1, +1, width, -width]
-  let direction = directions[Math.floor(Math.random() * directions.length)]
 
+function ghostLogic(ghost, direction, directions) {
+  
+
+  //getOutCage
+  if(squares[ghost.currentIndex].classList.contains('ghost-lair')) {
+    directions.push(+1,-1, -width)
+    direction = directions[Math.floor(Math.random() * directions.length)]
+    moveGhost(ghost, direction, directions)
+    clearInterval(ghost.timerId)
+
+  }
+  else if(!squares[ghost.currentIndex].classList.contains('ghost-lair')) {
+    
+    directions.push(+width)
+    direction = directions[Math.floor(Math.random() * directions.length)]
+    moveGhost(ghost,direction, directions)
+    clearInterval(ghost.timerId)
+    
+  }
+}
+function moveGhost(ghost) {
+  let direction = 0
+  let directions = []
   ghost.timerId = setInterval(function() {
+   
+    ghostLogic(ghost, direction, directions)
+    
     //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
+    if(squares[ghost.currentIndex -width].classList.contains('exit') || squares[ghost.currentIndex].classList.contains('exit')  || squares[ghost.currentIndex -(width *2)].classList.contains('exit')|| squares[ghost.currentIndex -(width *3)].classList.contains('exit')) {
+      direction = -width
+    }
     if  (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
       !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
+        
         //remove the ghosts classes
         squares[ghost.currentIndex].classList.remove(ghost.className)
         squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
@@ -318,7 +396,13 @@ function moveGhost(ghost) {
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     //else find a new random direction ot go in
     } else direction = directions[Math.floor(Math.random() * directions.length)]
-
+    if  (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+      !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
+        squares[ghost.currentIndex].classList.remove(ghost.className)
+        squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
+       /*  scanPacman(ghost, direction) */
+        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+      }
     //if the ghost is currently scared
     if (ghost.isScared) {
       squares[ghost.currentIndex].classList.add('scared-ghost')
@@ -335,17 +419,28 @@ function moveGhost(ghost) {
   checkForGameOver()
   }, ghost.speed)
 }
- let scoreDisplay, scoreTitle, spanScore
+/* function scanPacman(ghost, direction){
+  console.log(ghost.currentIndex - pacmanCurrentIndex <= 8)
+  if(ghost.currentIndex - pacmanCurrentIndex <= 8  ){
+ 
+
+  }
+  
+
+} */
+let scoreTitle, spanScore
 function createScore() { 
-  if (!container.querySelector('.score')) {
-    scoreDisplay = document.createElement('div')
-    scoreDisplay.classList.add('score')
+
+  if (!scoreDisplay.hasChildNodes()) {
+  
+   
     scoreTitle = document.createElement('span')
     spanScore = document.createElement('span')
     scoreTitle.innerText = 'Score: '   
     scoreDisplay.appendChild(scoreTitle)  
     scoreDisplay.appendChild(spanScore) 
-    container.appendChild(scoreDisplay)
+    scoreDisplay.style = 'box-shadow: #dddada 5px 5px;'
+    
 
   }
   scoreTitle.innerText = 'Score: '
@@ -370,12 +465,23 @@ function checkForWin() {
   if (score === 274) {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     document.removeEventListener('keyup', movePacman)
-    setTimeout(function(){ alert("You have WON!"); }, 500)
+    setTimeout(function(){ container.innerHTML = `<h2>Você venceu</h2><button onclick="location.reload();">Restart</button>` }, 500)
   }
 }
 function utilsCss(rotate) {
-  const styleSheet = document.styleSheets[0]; // Pega a primeira folha de estilo, ajuste se necessário
+
+  const styleSheet = document.styleSheets[0];
+  
+  for (let i = 0; i < styleSheet.cssRules.length; i++) {
+    const rule = styleSheet.cssRules[i];
+    if (rule.selectorText === '.pacmanMoving' && rule.style.transform) {
+      rule.style.removeProperty('transform');
+    }
+  }
   const rule = `.pacmanMoving { transform: rotate(${rotate}deg); }`;
   const ruleIndex = styleSheet.insertRule(rule, styleSheet.cssRules.length);
+ 
+
 }
+
 
