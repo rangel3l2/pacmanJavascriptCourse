@@ -74,14 +74,13 @@ buildBoard()
 
 let pacmanCurrentIndex = 490
 
-squares[pacmanCurrentIndex].classList.add('pacmanStopped')
-let pacmanMoving = document.querySelector('.pacmanMoving')
 
+
+squares[pacmanCurrentIndex].classList.add('pacmanStopped')
 
 function movePacman(e) {
   e.preventDefault()
-  squares[pacmanCurrentIndex].classList.remove('pacmanMoving')
-  squares[pacmanCurrentIndex].classList.remove('pacmanStopped')  
+  squares[pacmanCurrentIndex].classList.remove('pacmanMoving', 'pacmanStopped');
   
  
   switch(e.keyCode) {
@@ -89,56 +88,164 @@ function movePacman(e) {
  
     case 37:
       utilsCss(180)
-      if(
-        pacmanCurrentIndex % width !== 0 &&
-        !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
-        !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
-        )
-      pacmanCurrentIndex -= 1
-      if (squares[pacmanCurrentIndex -1] === squares[363]) {
-        pacmanCurrentIndex = 391
-      }
+      
+      moveLeft()
+      squares[pacmanCurrentIndex].classList.add('pacmanMoving')
       break
       //up
     case 38:
       utilsCss(-90)
-      if(
-        pacmanCurrentIndex - width >= 0 &&
-        !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
-        !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
-        ) 
-      pacmanCurrentIndex -= width
+      moveUp()
       break
       //right
     case 39:
       utilsCss(0)
-      if(
-        pacmanCurrentIndex % width < width - 1 &&
-        !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
-        !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
-      )
-      pacmanCurrentIndex += 1
-      if (squares[pacmanCurrentIndex +1] === squares[392]) {
-        pacmanCurrentIndex = 364
-      }
+      moveRight()
       break
       //down
     case 40:
       utilsCss(90)
-      if (
-        pacmanCurrentIndex + width < width * width &&
-        !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
-        !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
-      )
-      pacmanCurrentIndex += width
+      moveDown()
       break
   }
-  squares[pacmanCurrentIndex].classList.add('pacmanMoving')
+
+ 
+}
+let moveLeftInterval, moveRightInterval, moveUpInterval, moveDownInterval;
+const moveLeft = ()=>{
+ 
+  if(
+    pacmanCurrentIndex % width !== 0 &&
+    !squares[pacmanCurrentIndex -1].classList.contains('wall') &&
+    !squares[pacmanCurrentIndex -1].classList.contains('ghost-lair')
+    ){
+
+    squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
+      pacmanCurrentIndex -= 1
+      pacDotEaten()
+      powerPelletEaten()
+      checkForGameOver()
+      checkForWin()
+      squares[pacmanCurrentIndex].classList.add('pacmanMoving')
+    }
+    else{
+      clearInterval(moveUpInterval);
+      clearInterval(moveDownInterval);
+      clearInterval(moveLeftInterval);
+      clearInterval(moveRightInterval);
+      squares[pacmanCurrentIndex].classList.add('pacmanStopped')
+    }
+ 
+  if (squares[pacmanCurrentIndex -1] === squares[363]) {
+    pacmanCurrentIndex = 391
+  }
+  clearInterval(moveUpInterval);
+  clearInterval(moveDownInterval);
+  clearInterval(moveLeftInterval);
+  clearInterval(moveRightInterval);
+  
+  // Inicie o novo intervalo de movimento contínuo
+  moveLeftInterval = setInterval(moveLeft, 300);
+  
+}
+
+const moveRight = ()=>{
+  if(
+    pacmanCurrentIndex % width < width - 1 &&
+    !squares[pacmanCurrentIndex +1].classList.contains('wall') &&
+    !squares[pacmanCurrentIndex +1].classList.contains('ghost-lair')
+  ){
+  
+  squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
+  pacmanCurrentIndex += 1
   pacDotEaten()
   powerPelletEaten()
   checkForGameOver()
   checkForWin()
+  squares[pacmanCurrentIndex].classList.add('pacmanMoving')
+  }
+  else{
+    clearInterval(moveUpInterval);
+    clearInterval(moveDownInterval);
+    clearInterval(moveLeftInterval);
+    clearInterval(moveRightInterval);
+    squares[pacmanCurrentIndex].classList.add('pacmanStopped')
+  }
+  if (squares[pacmanCurrentIndex +1] === squares[392]) {
+    pacmanCurrentIndex = 364
+  }
+    clearInterval(moveUpInterval);
+    clearInterval(moveDownInterval);
+    clearInterval(moveLeftInterval);
+    clearInterval(moveRightInterval);
+  
+  // Inicie o novo intervalo de movimento contínuo
+  moveRightInterval = setInterval(moveRight, 300);
 }
+
+  const moveUp = ()=>{
+    if(
+      pacmanCurrentIndex - width >= 0 &&
+      !squares[pacmanCurrentIndex -width].classList.contains('wall') &&
+      !squares[pacmanCurrentIndex -width].classList.contains('ghost-lair')
+      ) 
+      {
+        squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
+        pacmanCurrentIndex -= width
+        pacDotEaten()
+        powerPelletEaten()
+        checkForGameOver()
+        checkForWin()
+        squares[pacmanCurrentIndex].classList.add('pacmanMoving')
+        clearInterval(moveUpInterval);
+        clearInterval(moveDownInterval);
+        clearInterval(moveLeftInterval);
+        clearInterval(moveRightInterval);
+      }
+      else{
+        clearInterval(moveUpInterval);
+        clearInterval(moveDownInterval);
+        clearInterval(moveLeftInterval);
+        clearInterval(moveRightInterval);
+        squares[pacmanCurrentIndex].classList.add('pacmanStopped')
+      }
+    
+      
+      // Inicie o novo intervalo de movimento contínuo
+      moveUpInterval = setInterval(moveUp, 300);  
+    }
+  
+  const moveDown = ()=>{
+    if (
+      pacmanCurrentIndex + width < width * width &&
+      !squares[pacmanCurrentIndex +width].classList.contains('wall') &&
+      !squares[pacmanCurrentIndex +width].classList.contains('ghost-lair')
+    ){
+      squares[pacmanCurrentIndex  ].classList.remove('pacmanMoving', 'pacmanStopped');
+      pacmanCurrentIndex += width
+      pacDotEaten()
+      powerPelletEaten()
+      checkForGameOver()
+      checkForWin()
+      squares[pacmanCurrentIndex].classList.add('pacmanMoving')
+      clearInterval(moveUpInterval);
+      clearInterval(moveDownInterval);
+      clearInterval(moveLeftInterval);
+      clearInterval(moveRightInterval);
+      moveUpInterval = setInterval(moveDown, 300); 
+    }
+    else{
+      clearInterval(moveUpInterval);
+      clearInterval(moveDownInterval);
+      clearInterval(moveLeftInterval);
+      clearInterval(moveRightInterval);
+      squares[pacmanCurrentIndex].classList.add('pacmanStopped')
+    }
+   
+
+  }
+  
+ 
 document.addEventListener('keyup', movePacman)
 
 // what happens when you eat a pac-dot
